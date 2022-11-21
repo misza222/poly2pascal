@@ -4,7 +4,7 @@ Tools for getting xml annotations in Pascal VOC format.
 
 import os
 import glob
-import cv2
+from PIL import Image as PILImage
 import pandas as pd
 import numpy as np
 from poly2pascal.data_loader import CSVLoader
@@ -158,8 +158,8 @@ class XMLAnnotator:
         Returns:
             tuple: Tuple of image height, width, and number of colour channels.
         """
-        img = cv2.imread(os.path.join(self.images_path, image_name))
-        height, width, colours = img.shape
+        img = PILImage.open(os.path.join(self.images_path, image_name))
+        height, width, colours = img.height, img.width, 3
         del img  # remove to reduce memory usage
         return height, width, colours
 
